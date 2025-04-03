@@ -48,9 +48,6 @@ const formSchema = z.object({
         message: "Please select a valid visibility option.",
     }),
     interests: z.array(z.string()).optional(),
-    termsAccepted: z.boolean().refine(val => val === true, {
-        message: "You must accept the terms and conditions.",
-    }),
 }).refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"],
@@ -82,14 +79,12 @@ export function ProfileForm({ onSubmitSuccess }) {
             birthDate: "",
             gender: "prefer-not-to-say",
             profileVisibility: "public",
-            interests: [],
-            termsAccepted: false,
+            interests: []
         },
     });
 
     function onSubmit(values) {
         console.log("Profile form submitted:", values);
-
         if (onSubmitSuccess) {
             onSubmitSuccess(values);
         }
@@ -156,8 +151,11 @@ export function ProfileForm({ onSubmitSuccess }) {
                             <FormItem>
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
-                                    <Input type="password" placeholder="********" {...field} />
+                                    <Input type="password" {...field} />
                                 </FormControl>
+                                <FormDescription>
+                                    Must be at least 8 characters with mixed case and numbers.
+                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -170,8 +168,11 @@ export function ProfileForm({ onSubmitSuccess }) {
                             <FormItem>
                                 <FormLabel>Confirm Password</FormLabel>
                                 <FormControl>
-                                    <Input type="password" placeholder="********" {...field} />
+                                    <Input type="password" {...field} />
                                 </FormControl>
+                                <FormDescription>
+                                    Repeat your password to confirm.
+                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -186,13 +187,13 @@ export function ProfileForm({ onSubmitSuccess }) {
                             <FormLabel>Bio</FormLabel>
                             <FormControl>
                                 <Textarea
-                                    placeholder="Tell us a little about yourself..."
+                                    placeholder="Tell us a little about yourself"
                                     className="resize-none"
                                     {...field}
                                 />
                             </FormControl>
                             <FormDescription>
-                                Maximum 160 characters.
+                                Keep it under 160 characters.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -229,74 +230,76 @@ export function ProfileForm({ onSubmitSuccess }) {
                     />
                 </div>
 
-                <FormField
-                    control={form.control}
-                    name="gender"
-                    render={({ field }) => (
-                        <FormItem className="space-y-3">
-                            <FormLabel>Gender</FormLabel>
-                            <FormControl>
-                                <RadioGroup
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                    className="flex flex-col space-y-1"
-                                >
-                                    <FormItem className="flex items-center space-x-3 space-y-0">
-                                        <FormControl>
-                                            <RadioGroupItem value="male" />
-                                        </FormControl>
-                                        <FormLabel className="font-normal">Male</FormLabel>
-                                    </FormItem>
-                                    <FormItem className="flex items-center space-x-3 space-y-0">
-                                        <FormControl>
-                                            <RadioGroupItem value="female" />
-                                        </FormControl>
-                                        <FormLabel className="font-normal">Female</FormLabel>
-                                    </FormItem>
-                                    <FormItem className="flex items-center space-x-3 space-y-0">
-                                        <FormControl>
-                                            <RadioGroupItem value="other" />
-                                        </FormControl>
-                                        <FormLabel className="font-normal">Other</FormLabel>
-                                    </FormItem>
-                                    <FormItem className="flex items-center space-x-3 space-y-0">
-                                        <FormControl>
-                                            <RadioGroupItem value="prefer-not-to-say" />
-                                        </FormControl>
-                                        <FormLabel className="font-normal">Prefer not to say</FormLabel>
-                                    </FormItem>
-                                </RadioGroup>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="profileVisibility"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Profile Visibility</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField
+                        control={form.control}
+                        name="gender"
+                        render={({ field }) => (
+                            <FormItem className="space-y-3">
+                                <FormLabel>Gender</FormLabel>
                                 <FormControl>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select profile visibility" />
-                                    </SelectTrigger>
+                                    <RadioGroup
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                        className="flex flex-col space-y-1"
+                                    >
+                                        <FormItem className="flex items-center space-x-3 space-y-0">
+                                            <FormControl>
+                                                <RadioGroupItem value="male" />
+                                            </FormControl>
+                                            <FormLabel className="font-normal">Male</FormLabel>
+                                        </FormItem>
+                                        <FormItem className="flex items-center space-x-3 space-y-0">
+                                            <FormControl>
+                                                <RadioGroupItem value="female" />
+                                            </FormControl>
+                                            <FormLabel className="font-normal">Female</FormLabel>
+                                        </FormItem>
+                                        <FormItem className="flex items-center space-x-3 space-y-0">
+                                            <FormControl>
+                                                <RadioGroupItem value="other" />
+                                            </FormControl>
+                                            <FormLabel className="font-normal">Other</FormLabel>
+                                        </FormItem>
+                                        <FormItem className="flex items-center space-x-3 space-y-0">
+                                            <FormControl>
+                                                <RadioGroupItem value="prefer-not-to-say" />
+                                            </FormControl>
+                                            <FormLabel className="font-normal">Prefer not to say</FormLabel>
+                                        </FormItem>
+                                    </RadioGroup>
                                 </FormControl>
-                                <SelectContent>
-                                    <SelectItem value="public">Public</SelectItem>
-                                    <SelectItem value="friends-only">Friends Only</SelectItem>
-                                    <SelectItem value="private">Private</SelectItem>
-                                </SelectContent>
-                            </Select>
-                            <FormDescription>
-                                Who can see your profile information.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="profileVisibility"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Profile Visibility</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select visibility" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        <SelectItem value="public">Public</SelectItem>
+                                        <SelectItem value="friends-only">Friends Only</SelectItem>
+                                        <SelectItem value="private">Private</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                                <FormDescription>
+                                    Who can view your profile information
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
 
                 <FormField
                     control={form.control}
@@ -306,7 +309,7 @@ export function ProfileForm({ onSubmitSuccess }) {
                             <div className="mb-4">
                                 <FormLabel className="text-base">Interests</FormLabel>
                                 <FormDescription>
-                                    Select the interests to personalize the user profile
+                                    Select the interests to personalize your profile
                                 </FormDescription>
                             </div>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

@@ -107,14 +107,10 @@ export function ApiCredentialsForm({ onSubmitSuccess }) {
                         <FormItem>
                             <FormLabel>API Secret</FormLabel>
                             <FormControl>
-                                <Input
-                                    type="password"
-                                    placeholder="Enter your API secret"
-                                    {...field}
-                                />
+                                <Input placeholder="Enter your API secret" type="password" {...field} />
                             </FormControl>
                             <FormDescription>
-                                Your private API secret. This is kept secure.
+                                Keep this secret secure - it's like a password for your API
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -128,20 +124,17 @@ export function ApiCredentialsForm({ onSubmitSuccess }) {
                         <FormItem>
                             <FormLabel>API Endpoint (Optional)</FormLabel>
                             <FormControl>
-                                <Input
-                                    placeholder="https://api.example.com/v1"
-                                    {...field}
-                                />
+                                <Input placeholder="https://api.example.com/v1" {...field} />
                             </FormControl>
                             <FormDescription>
-                                Only required for custom API services
+                                The URL where API requests will be sent
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
 
-                <Button type="submit">Send API Credentials</Button>
+                <Button type="submit" className="w-full">Complete Registration</Button>
             </form>
         </Form>
     )
