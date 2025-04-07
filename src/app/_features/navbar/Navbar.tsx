@@ -17,22 +17,15 @@ export default function Navbar() {
 
       <div className='space-x-4'>
         <Link href='/conversation' className='hover:underline'>
-          Prédateurs
+          Suspects
         </Link>
         <Link href='/dashboard' className='hover:underline'>
-          Profils
+          Profiles
         </Link>
         <Link href='/create-profile' className='hover:underline'>
-          Création de profil
+          Profile creation
         </Link>
       </div>
-
-      <Button
-        variant='outline'
-        className='border-white text-white hover:bg-gray-700'
-      >
-        Se connecter
-      </Button>
     </nav>
   );
 }
