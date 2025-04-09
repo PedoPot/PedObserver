@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# PedObserver
+## Sequence diagrams
+### Use case: Manually create a new profile
+```mermaid
+sequenceDiagram
+    PedObserver->>+PedoController: Send new profile <br>information
+    activate PedoController
+    PedoController->>+Database: Add profile <br>information
+    activate Database
+    deactivate PedoController
+    activate PedoController
+    PedObserver->>+PedoController: Send new api <br>credentials
+    PedoController->>+Database: Add api <br>credentials
+    PedoController->>+PedoConnector: Send API credentials to start listener
+    deactivate PedoController
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Use case: Automatically generate a new profile with an activity
+```mermaid
+sequenceDiagram
+    PedoObserver->>PedoController: Sends the API<br> credentials to <br>generate a new profile 
+    activate PedoController
+    PedoController->>PedoBaiter: Asks to create<br>a new profile
+    deactivate PedoController
+    activate PedoBaiter
+    PedoBaiter-->>PedoController: Returns the <br>new profile
+    deactivate PedoBaiter
+    activate PedoController
+    PedoController->>Database: Saves the new profile
+    PedoController->>PedoBaiter: Asks to create<br>an activity for <br>the profile
+    deactivate PedoController
+    activate PedoBaiter
+    PedoBaiter-->>PedoController: Returns the <br>activity generated
+    deactivate PedoBaiter
+    activate PedoController
+    PedoController->>Database: Saves the activity for the profile
+    PedoController->>PedoConnector: Creates the new profile with the activity
+    PedoController->>PedoConnector: Use the API credentials to start a new listener
+    PedoController-->>PedoObserver: Display the <br>newly generated profile
+    deactivate PedoController
+```
