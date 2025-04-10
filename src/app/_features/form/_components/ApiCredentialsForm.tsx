@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -16,25 +15,15 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { apiCredentialsFormSchema, ApiCredentialsFormValues } from "../schemas/apiCredentialsFormSchema"
 
-const formSchema = z.object({
-    apiKey: z.string().min(1, {
-        message: "API Key is required.",
-    }),
-    apiSecret: z.string().min(1, {
-        message: "API Secret is required.",
-    }),
-    apiEndpoint: z.string().url({
-        message: "Please enter a valid API endpoint URL.",
-    }).optional().or(z.literal('')),
-    apiService: z.string({
-        required_error: "Please select an API service.",
-    }),
-})
+interface ApiCredentialsFormProps {
+    onSubmitSuccess: (values: ApiCredentialsFormValues) => void
+}
 
-export function ApiCredentialsForm({ onSubmitSuccess }) {
-    const form = useForm({
-        resolver: zodResolver(formSchema),
+export function ApiCredentialsForm({ onSubmitSuccess }: ApiCredentialsFormProps) {
+    const form = useForm<ApiCredentialsFormValues>({
+        resolver: zodResolver(apiCredentialsFormSchema),
         defaultValues: {
             apiKey: "",
             apiSecret: "",
@@ -43,7 +32,7 @@ export function ApiCredentialsForm({ onSubmitSuccess }) {
         },
     })
 
-    function onSubmit(values) {
+    function onSubmit(values: ApiCredentialsFormValues) {
         console.log("API form submitted:", values);
 
         // Call the callback if it exists
@@ -137,5 +126,5 @@ export function ApiCredentialsForm({ onSubmitSuccess }) {
                 <Button type="submit" className="w-full">Complete Registration</Button>
             </form>
         </Form>
-    )
+    );
 }
