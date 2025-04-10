@@ -1,9 +1,9 @@
 "use client"
 
 import React, { useState } from 'react';
-import { ProfileForm } from '@/app/_features/form/CreateProfileForm';
-import { ApiCredentialsForm } from '@/app/_features/form/ApiCredentialsForm';
-import { StepIndicator } from '@/app/_features/form/StepIndicator';
+import { ProfileForm } from '@/app/_features/form/_components/CreateProfileForm';
+import { ApiCredentialsForm } from '@/app/_features/form/_components/ApiCredentialsForm';
+import { StepIndicator } from '@/app/_features/form/_components/StepIndicator';
 
 export const ManualProfileCreator = ({
                                          onComplete,

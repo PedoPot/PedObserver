@@ -1,6 +1,6 @@
 "use client"
 
-import { ManualProfileCreator } from '@/app/_features/form/ManualProfileCreatorForm';
+import { ManualProfileCreator } from '@/app/_features/form/_components/ManualProfileCreatorForm';
 
 
 export default function Home() {
