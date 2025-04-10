@@ -22,8 +22,8 @@ const formSchema = z.object({
         message: "API Key is required.",
     }),
     apiSecret: z.string().min(1, {
-        message: "API Secret is required.",
-    }),
+        message: "If provided, API Secret cannot be empty.",
+    }).optional().or(z.literal('')),
     apiEndpoint: z.string().url({
         message: "Please enter a valid API endpoint URL.",
     }).optional().or(z.literal('')),
