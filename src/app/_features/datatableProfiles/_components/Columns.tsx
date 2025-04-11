@@ -10,6 +10,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useRouter } from 'next/navigation';
+
 export const columns: ColumnDef<Profil>[] = [
   {
     accessorKey: 'username',
@@ -26,7 +28,7 @@ export const columns: ColumnDef<Profil>[] = [
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Connector
+          Connectorg
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
@@ -73,8 +75,7 @@ export const columns: ColumnDef<Profil>[] = [
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const Profil = row.original;
-
+      const router = useRouter(); // Utilisation du hook dans la cellule
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -85,10 +86,15 @@ export const columns: ColumnDef<Profil>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem className='text-red-600 hover:text-white hover:bg-red-600 focus:bg-red-600 focus:text-white font-semibold'>
-              Signal
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.stopPropagation();
+                router.push(`/conversationsProfile/${row.original.id}`)
+              }}
+              className='cursor-pointer hover:bg-muted transition'
+            >
+              See Conversations
             </DropdownMenuItem>
-            <DropdownMenuItem>View Profil details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
