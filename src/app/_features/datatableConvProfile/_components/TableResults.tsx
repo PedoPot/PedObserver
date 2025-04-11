@@ -1,16 +1,17 @@
-import { ColumnDef, Table, flexRender } from '@tanstack/react-table';
-import { Profil } from '../schemas/Profil';
-import { TableBody, TableCell, TableRow } from '@/components/ui/table';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { Conversation } from "../schemas/Conversation";
+import { ColumnDef, flexRender, Table } from "@tanstack/react-table";
+
 type TableResultsProps = {
-  table: Table<Profil>;
-  router: AppRouterInstance;
-  columns: ColumnDef<Profil>[];
+  table: Table<Conversation>;
+  columns: ColumnDef<Conversation>[];
+  onConversationClick: (conversation: Conversation) => void;
 };
+
 export default function TableResults({
   table,
-  router,
   columns,
+  onConversationClick,
 }: TableResultsProps) {
   return (
     <TableBody>
@@ -19,9 +20,7 @@ export default function TableResults({
           <TableRow
             key={row.id}
             data-state={row.getIsSelected() && 'selected'}
-            onClick={() =>
-              router.push(`/conversationsSuspect/${row.original.id}`)
-            }
+            onClick={() => onConversationClick(row.original)}
             className='cursor-pointer hover:bg-muted transition'
           >
             {row.getVisibleCells().map((cell) => (

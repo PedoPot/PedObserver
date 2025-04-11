@@ -19,9 +19,7 @@ export default function TableResults({
           <TableRow
             key={row.id}
             data-state={row.getIsSelected() && 'selected'}
-            onClick={() =>
-              router.push(`/conversationsSuspect/${row.original.id}`)
-            }
+            onClick={() => router.push(`/profile/${row.original.id}`)}
             className='cursor-pointer hover:bg-muted transition'
           >
             {row.getVisibleCells().map((cell) => (

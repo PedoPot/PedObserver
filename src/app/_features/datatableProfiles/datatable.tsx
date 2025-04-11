@@ -25,7 +25,7 @@ import TableResults from './_components/TableResults';
 
 import { columns } from './_components/Columns';
 
-export function DataTable() {
+export function DatatableProfiles() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -56,7 +56,7 @@ export function DataTable() {
 
   return (
     <div className='w-full'>
-      <Filters table={table} />
+      <Filters table={table} router={router} />
       <div className='rounded-md border'>
         <Table>
           <TableHeader>
