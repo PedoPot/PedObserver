@@ -1,28 +1,27 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ProfileForm } from '@/app/_features/form/_components/CreateProfileForm';
 import { ApiCredentialsForm } from '@/app/_features/form/_components/ApiCredentialsForm';
-import { StepIndicator } from '@/app/_features/form/_components/StepIndicator';
+import { ModifyProfileForm } from './ModifyProfileForm';
 
-export const ManualProfileCreator = ({
+export const ManualProfileModify = ({
   onComplete,
+  id,
   initialStep = 1,
   initialUserData = null,
-  title = 'Create an account',
-  subtitle = "Let's set up the profile information and the API credentials",
-  stepLabels = ['Profile Setup', 'API Credentials'],
+  title = 'Modify an account',
+  subtitle = "Let's adjust the profile information and the API credentials",
 }: any) => {
   const [currentStep, setCurrentStep] = useState(initialStep);
   const [userData, setUserData] = useState(initialUserData);
-  const handleRegistrationComplete = (data: any) => {
+  // This function will be passed to the ProfileForm
+  const handleModifyProfile = (data) => {
     console.log('Registration completed with data:', data);
     alert('Registration complete!');
     // Here you could redirect the user or perform other actions
   };
 
-  // This function will be passed to the ProfileForm
-  const handleProfileSubmit = (formData: any) => {
+  const handleProfileSubmit = (formData) => {
     console.log('Profile form submitted:', formData);
 
     // Store the user data
@@ -33,7 +32,7 @@ export const ManualProfileCreator = ({
   };
 
   // This function will be passed to the ApiCredentialsForm
-  const handleApiSubmit = (formData: any) => {
+  const handleApiSubmit = (formData) => {
     console.log('API form submitted:', formData);
 
     const completeData = {
@@ -48,7 +47,7 @@ export const ManualProfileCreator = ({
     if (onComplete) {
       onComplete(completeData);
     } else {
-      alert('Registration complete!');
+      alert('Modification completed!');
     }
   };
 
@@ -60,19 +59,12 @@ export const ManualProfileCreator = ({
           <p className='mt-2 text-gray-600'>{subtitle}</p>
         </div>
 
-        {/* Step Indicator */}
-        <div className='mb-8'>
-          <StepIndicator
-            currentStep={currentStep}
-            totalSteps={stepLabels.length}
-            labels={stepLabels}
-          />
-        </div>
         <div className='bg-white shadow-xl rounded-lg overflow-hidden'>
           <div className='p-6 sm:p-8'>
             {currentStep === 1 ? (
-              <ProfileForm
+              <ModifyProfileForm
                 onSubmitSuccess={handleProfileSubmit}
+                id={id}
                 // initialData={userData}
               />
             ) : (

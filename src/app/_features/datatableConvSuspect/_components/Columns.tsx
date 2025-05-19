@@ -1,8 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { Profil } from '../schemas/Profil';
+import { Conversation } from '../schemas/Conversation';
 import { Button } from '@/components/ui/button';
 import { ArrowUpDown, MoreHorizontal, X } from 'lucide-react';
-import { FaInstagram } from 'react-icons/fa';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,63 +9,30 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-export const columns: ColumnDef<Profil>[] = [
+
+export const columns: ColumnDef<Conversation>[] = [
   {
-    accessorKey: 'username',
-    header: 'Username',
+    accessorKey: 'profile',
+    header: 'Targeted Profile',
     cell: ({ row }) => (
-      <div className='capitalize'>{row.getValue('username')}</div>
+      <div className='capitalize'>{row.getValue('profile')}</div>
     ),
   },
   {
-    accessorKey: 'connector',
+    accessorKey: 'numberOfMessages',
     header: ({ column }) => {
       return (
         <Button
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Connector
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const connector = row.getValue('connector') as string;
-
-      console.log('connector:', connector); // Debug
-
-      const renderIcon = () => {
-        switch (connector.toLowerCase()) {
-          case 'instagram':
-            return <FaInstagram className='w-4 h-4 text-pink-500' />;
-          case 'x':
-            return <X className='w-4 h-4 text-black' />;
-          default:
-            return null;
-        }
-      };
-
-      return (
-        <div className='flex items-center gap-2 capitalize'>{renderIcon()}</div>
-      );
-    },
-  },
-  {
-    accessorKey: 'numberOfConversations',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Number of Conversations
+          Number of Messages
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className='capitalize'>{row.getValue('numberOfConversations')}</div>
+      <div className='capitalize'>{row.getValue('numberOfMessages')}</div>
     ),
   },
   {
@@ -88,7 +54,6 @@ export const columns: ColumnDef<Profil>[] = [
             <DropdownMenuItem className='text-red-600 hover:text-white hover:bg-red-600 focus:bg-red-600 focus:text-white font-semibold'>
               Signal
             </DropdownMenuItem>
-            <DropdownMenuItem>View Profil details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
