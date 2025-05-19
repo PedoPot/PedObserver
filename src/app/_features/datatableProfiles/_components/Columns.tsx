@@ -28,7 +28,7 @@ export const columns: ColumnDef<Profil>[] = [
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Connectorg
+          Connector
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );

@@ -93,7 +93,7 @@ export function DatatableConvSuspect() {
         <ScrollArea className='flex-1 p-4 space-y-4 overflow-y-auto'>
           {messages.length === 0 ? (
             <p className='text-center text-sm text-muted-foreground italic'>
-              Cliquez sur une conversation pour l'afficher.
+              Click a conversation to view it.
             </p>
           ) : (
             messages.map((msg) => (
